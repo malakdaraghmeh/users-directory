@@ -1,11 +1,11 @@
 
 import { Link, useParams } from 'react-router-dom';
-import { useUsers } from '../../hooks/useUsers';
+import { useUser } from '../../hooks/useUser';
 import './UserDetailsPage.css';
 
 function UserDetailsPage() {
   const { id } = useParams();
-  const { users, loading, error } = useUsers();
+  const { user, loading, error, refetch } = useUser(id);
 
   if (loading) {
     return (
@@ -19,12 +19,17 @@ function UserDetailsPage() {
     return (
       <main className="container main-content">
         <p className="status-message error-message">{error}</p>
-        <Link to="/" className="back-link">Back to Users</Link>
+
+        <button className="retry-button" onClick={refetch}>
+          Try Again
+        </button>
+
+        <Link to="/" className="back-link">
+          Back to Users
+        </Link>
       </main>
     );
   }
-
-  const user = users.find((item) => item.id === Number(id));
 
   if (!user) {
     return (
@@ -32,7 +37,9 @@ function UserDetailsPage() {
         <div className="details-not-found">
           <h2>User Not Found</h2>
           <p>Sorry, we couldn't find this user.</p>
-          <Link to="/" className="back-link">Back to Users</Link>
+          <Link to="/" className="back-link">
+            Back to Users
+          </Link>
         </div>
       </main>
     );

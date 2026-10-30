@@ -94,6 +94,37 @@
     }
   }
   
+/* Retry Button */
+.retry-button,
+.clear-filters-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button {
+  display: flex;
+  margin: 12px auto;
+}
+
+.retry-button:hover,
+.clear-filters-button:hover {
+  background-color: var(--primary-dark);
+}
+
+.clear-filters-button {
+  margin-top: 20px;
+}
+
   /* Mobile */
   @media (max-width: 600px) {
     .users-toolbar {

@@ -11,6 +11,7 @@
     color: var(--primary-dark);
   }
   
+  /* Page Heading */
   .details-heading {
     margin-bottom: 32px;
   }
@@ -26,12 +27,14 @@
     color: var(--muted-color);
   }
   
+  /* Details Layout */
   .details-section {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
   
+  /* Details Cards */
   .details-card {
     padding: 26px;
     background: var(--white);
@@ -45,6 +48,7 @@
     font-size: 19px;
   }
   
+  /* Details Information */
   .details-item {
     display: flex;
     flex-direction: column;
@@ -70,6 +74,7 @@
     overflow-wrap: anywhere;
   }
   
+  /* User Not Found */
   .details-not-found {
     padding: 50px 20px;
     text-align: center;
@@ -86,6 +91,25 @@
     color: var(--muted-color);
   }
   
+  /* Retry Button */
+  .retry-button {
+    display: block;
+    margin: 12px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .retry-button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  /* Responsive Design */
   @media (max-width: 700px) {
     .details-section {
       grid-template-columns: 1fr;

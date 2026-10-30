@@ -6,6 +6,7 @@ export function useUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -34,7 +35,12 @@ export function useUsers() {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [retryCount]);
 
-  return { users, loading, error };
+  // Retry fetching users
+  const refetch = () => {
+    setRetryCount((count) => count + 1);
+  };
+
+  return { users, loading, error, refetch };
 }

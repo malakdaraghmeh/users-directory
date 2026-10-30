@@ -5,7 +5,7 @@ import UserCard from '../../components/UserCard/UserCard';
 import './UsersPage.css';
 
 function UsersPage() {
-  const { users, loading, error } = useUsers();
+  const { users, loading, error, refetch } = useUsers();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
@@ -31,6 +31,15 @@ function UsersPage() {
     return matchesName && matchesCity && matchesCompany;
   });
 
+  const hasActiveFilters =
+    searchTerm.trim() !== '' || selectedCity !== '' || selectedCompany !== '';
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSelectedCity('');
+    setSelectedCompany('');
+  };
+
   if (loading) {
     return (
       <main className="container main-content">
@@ -43,6 +52,10 @@ function UsersPage() {
     return (
       <main className="container main-content">
         <p className="status-message error-message">{error}</p>
+
+        <button className="retry-button" onClick={refetch}>
+          Try Again
+        </button>
       </main>
     );
   }
@@ -107,9 +120,21 @@ function UsersPage() {
             ))}
           </div>
         ) : (
-          <p className="status-message">
-            No users found matching your filters.
-          </p>
+          <div className="empty-placeholder">
+            <h2>No Users Found</h2>
+            <p>
+              No users match your search or selected filters.
+            </p>
+
+            {hasActiveFilters && (
+              <button
+                className="clear-filters-button"
+                onClick={clearFilters}
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
         )}
       </section>
     </main>
