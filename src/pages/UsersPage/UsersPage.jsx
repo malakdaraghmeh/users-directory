@@ -1,5 +1,6 @@
 
 import { useUsers } from '../../hooks/useUsers';
+import UserCard from '../../components/UserCard/UserCard';
 import './UsersPage.css';
 
 function UsersPage() {
@@ -34,7 +35,9 @@ function UsersPage() {
       <section className="page-heading">
         <span className="eyebrow">USER MANAGEMENT</span>
         <h1>Explore Users</h1>
-        <p>Browse, search, and discover user information all in one place.</p>
+        <p>
+          Browse, search, and discover user information all in one place.
+        </p>
       </section>
 
       <section className="users-section">
@@ -42,12 +45,7 @@ function UsersPage() {
 
         <div className="users-grid">
           {users.map((user) => (
-            <article className="user-card" key={user.id}>
-              <h3>{user.name}</h3>
-              <p>{user.email}</p>
-              <p>{user.address.city}</p>
-              <p>{user.company.name}</p>
-            </article>
+            <UserCard key={user.id} user={user} />
           ))}
         </div>
       </section>
