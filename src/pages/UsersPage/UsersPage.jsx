@@ -1,10 +1,16 @@
 
+import { useState } from 'react';
 import { useUsers } from '../../hooks/useUsers';
 import UserCard from '../../components/UserCard/UserCard';
 import './UsersPage.css';
 
 function UsersPage() {
   const { users, loading, error } = useUsers();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) {
     return (
@@ -22,14 +28,6 @@ function UsersPage() {
     );
   }
 
-  if (users.length === 0) {
-    return (
-      <main className="container main-content">
-        <p className="status-message">No users found.</p>
-      </main>
-    );
-  }
-
   return (
     <main className="container main-content">
       <section className="page-heading">
@@ -41,13 +39,29 @@ function UsersPage() {
       </section>
 
       <section className="users-section">
-        <h2>All Users ({users.length})</h2>
+        <div className="users-toolbar">
+          <h2>All Users ({filteredUsers.length})</h2>
 
-        <div className="users-grid">
-          {users.map((user) => (
-            <UserCard key={user.id} user={user} />
-          ))}
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search users by name..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
         </div>
+
+        {filteredUsers.length > 0 ? (
+          <div className="users-grid">
+            {filteredUsers.map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </div>
+        ) : (
+          <p className="status-message">
+            No users found matching "{searchTerm}".
+          </p>
+        )}
       </section>
     </main>
   );
