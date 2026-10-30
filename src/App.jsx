@@ -1,5 +1,7 @@
 
+import { Routes, Route, Link } from 'react-router-dom';
 import UsersPage from './pages/UsersPage/UsersPage';
+import UserDetailsPage from './pages/UserDetailsPage/UserDetailsPage';
 import './App.css';
 
 function App() {
@@ -7,14 +9,17 @@ function App() {
     <div className="app">
       <header className="app-header">
         <div className="container">
-          <a href="/" className="brand">
+          <Link to="/" className="brand">
             <span className="brand-icon">UD</span>
             <span>User Directory</span>
-          </a>
+          </Link>
         </div>
       </header>
 
-      <UsersPage />
+      <Routes>
+        <Route path="/" element={<UsersPage />} />
+        <Route path="/users/:id" element={<UserDetailsPage />} />
+      </Routes>
     </div>
   );
 }
