@@ -4,7 +4,7 @@ A responsive React application that fetches and displays user information from t
 
 ## Live Demo
 
-Coming soon.
+[View Live Demo](https://users-directory-virid.vercel.app/)
 
 ## Features
 
