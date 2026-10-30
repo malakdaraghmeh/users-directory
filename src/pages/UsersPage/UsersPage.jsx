@@ -6,11 +6,30 @@ import './UsersPage.css';
 
 function UsersPage() {
   const { users, loading, error } = useUsers();
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCompany, setSelectedCompany] = useState('');
+
+  const cities = [...new Set(users.map((user) => user.address.city))].sort();
+
+  const companies = [
+    ...new Set(users.map((user) => user.company.name)),
+  ].sort();
+
+  const filteredUsers = users.filter((user) => {
+    const matchesName = user.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesCity =
+      !selectedCity || user.address.city === selectedCity;
+
+    const matchesCompany =
+      !selectedCompany || user.company.name === selectedCompany;
+
+    return matchesName && matchesCity && matchesCompany;
+  });
 
   if (loading) {
     return (
@@ -40,15 +59,45 @@ function UsersPage() {
 
       <section className="users-section">
         <div className="users-toolbar">
-          <h2>All Users ({filteredUsers.length})</h2>
+          <div>
+            <h2>All Users ({filteredUsers.length})</h2>
+          </div>
 
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search users by name..."
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-          />
+          <div className="users-filters">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search users by name..."
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+
+            <select
+              className="filter-select"
+              value={selectedCity}
+              onChange={(event) => setSelectedCity(event.target.value)}
+            >
+              <option value="">All Cities</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+
+            <select
+              className="filter-select"
+              value={selectedCompany}
+              onChange={(event) => setSelectedCompany(event.target.value)}
+            >
+              <option value="">All Companies</option>
+              {companies.map((company) => (
+                <option key={company} value={company}>
+                  {company}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {filteredUsers.length > 0 ? (
@@ -59,7 +108,7 @@ function UsersPage() {
           </div>
         ) : (
           <p className="status-message">
-            No users found matching "{searchTerm}".
+            No users found matching your filters.
           </p>
         )}
       </section>
