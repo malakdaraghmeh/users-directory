@@ -1,5 +1,6 @@
 
-import './App.css'
+import UsersPage from './pages/UsersPage/UsersPage';
+import './App.css';
 
 function App() {
   return (
@@ -13,28 +14,9 @@ function App() {
         </div>
       </header>
 
-      <main className="container main-content">
-        <section className="page-heading">
-          <span className="eyebrow">USER MANAGEMENT</span>
-          <h1>Explore Users</h1>
-          <p>
-            Browse, search, and discover user information
-            all in one place.
-          </p>
-        </section>
-
-        <section className="users-section">
-          <div className="empty-placeholder">
-            <h2>Your users will appear here</h2>
-            <p>
-              We are getting everything ready to display
-              the user directory.
-            </p>
-          </div>
-        </section>
-      </main>
+      <UsersPage />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
